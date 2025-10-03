@@ -1,0 +1,389 @@
+/* Shared Admin Layout Styles: sidebar, top bar, basic buttons */
+:root {
+	/* Sidebar gradient defaults (override per-page or via helper classes) */
+	--sidebar-gradient-angle: 180deg;
+	--sidebar-gradient-start:  #ffe6f0; /* light rose (soft) */
+	--sidebar-gradient-mid:    #ffd3e4; /* soft pink */
+	--sidebar-gradient-end:    #ff9ec5; /* gentle vibrant end */
+    /* Accent color for active indicator and focus */
+    --sidebar-accent: #ff69b4;
+    /* Top bar measured height (set by JS); fallback values */
+    --admin-topbar-height: 72px;
+}
+* { box-sizing: border-box; }
+body { 
+	font-family: Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+    margin: 0;
+}
+.sidebar { width:280px; background-color: var(--sidebar-gradient-start, #ffb6ce); background:linear-gradient(var(--sidebar-gradient-angle, 180deg), var(--sidebar-gradient-start, #ffe6f0) 0%, var(--sidebar-gradient-mid, #ffd3e4) 40%, var(--sidebar-gradient-end, #ff9ec5) 100%); padding:20px; display:flex; flex-direction:column; position:fixed; height:100vh; left:0; top:0; overflow-y:auto; -webkit-overflow-scrolling: touch; transition: transform .3s ease; z-index:3400; }
+.sidebar.collapsed { transform: translateX(-100%); }
+.logo-container { text-align:center; margin-bottom:30px; }
+.logo { width:120px; height:120px; border-radius:50%; background:#fff; border:2px solid #eee; display:flex; align-items:center; justify-content:center; margin:0 auto 15px; object-fit:contain; }
+.admin-label { color:#333; font-size:16px; font-weight:600; text-align:center; margin-bottom:30px; letter-spacing:.5px; text-transform:uppercase; }
+.nav-menu { flex:1; }
+.nav-item { display:flex; align-items:center; padding:14px 18px; margin-bottom:8px; background:transparent; border:none; border-radius:8px; text-decoration:none; color:#111; transition: background-color .2s ease, color .2s ease; box-shadow:none; position:relative; }
+.nav-item .nav-badge { margin-left:8px; background:#dc2626; color:#fff; font-size:11px; line-height:1; font-weight:700; padding:4px 8px; border-radius:999px; box-shadow:0 2px 4px rgba(0,0,0,0.15); display:inline-flex; align-items:center; justify-content:center; min-width:20px; }
+.nav-item .nav-badge:empty { display:none; }
+.nav-item:hover { background:rgba(255,255,255,.22); color:#111; transform:none; box-shadow:none; }
+.nav-item.active { background:rgba(255,255,255,.35); box-shadow:none; font-weight:600; color:#111; }
+/* Active left accent bar */
+.nav-item.active::before { content:""; position:absolute; left:0; top:8px; bottom:8px; width:4px; border-radius:3px; background: var(--sidebar-accent, #ff69b4); }
+.nav-icon { width:26px; height:26px; margin-right:16px; display:flex; align-items:center; justify-content:center; font-size:18px; transition:transform .3s cubic-bezier(.4,0,.2,1); }
+.nav-item:hover .nav-icon { transform:none; }
+.nav-item .nav-icon { color:#6b7280; }
+.nav-item:hover .nav-icon, .nav-item.active .nav-icon { color:#111; }
+.nav-item:focus-visible { outline:2px solid var(--sidebar-accent, #ff69b4); outline-offset:2px; }
+.nav-text { font-size:16px; font-weight:600; letter-spacing:.3px; line-height:1.5; font-family: inherit; flex:1; min-width:0; }
+.badge-count { display:inline-block; background:#ff69b4; color:#fff; border-radius:999px; padding:3px 10px; font-size:13px; font-weight:800; margin-left:auto; }
+.main-content { flex:1; margin-left:280px; background:#f8f9fa; min-height:100vh; transition:margin-left .3s ease; }
+.main-content.expanded { margin-left:0; }
+.top-bar { background:#fff; padding:20px 30px; padding-top: calc(env(safe-area-inset-top, 0px) + 20px); display:flex; align-items:center; justify-content:space-between; box-shadow:0 2px 4px rgba(0,0,0,0.1); }
+.page-title { font-size:24px; font-weight:bold; color:#333; display:flex; align-items:center; gap:10px; }
+.hamburger-btn { background:none; border:none; font-size:24px; cursor:pointer; color:#333; padding:8px; border-radius:4px; transition: background-color .3s ease; margin-right:15px; -webkit-appearance: none; appearance: none; box-shadow: none; }
+.hamburger-btn:hover { background-color:#ffd1df; color:#ff69b4; }
+.logout-btn { padding:10px 20px; border:none; border-radius:6px; cursor:pointer; font-size:14px; transition: all .3s ease; background-color:#ff69b4; color:#fff; }
+.logout-btn:hover { transform: translateY(-2px); box-shadow:0 4px 8px rgba(0,0,0,.2); }
+.btn { padding:8px 12px; border-radius:6px; border:1px solid #ddd; background:#fff; cursor:pointer; }
+/* Prevent background scroll when mobile sidebar is open */
+body.no-scroll { overflow: hidden; }
+/* Ensure anchor-based buttons have no underline and render like buttons */
+a.btn, a.btn-xs, a.btn-sm, .btn, .btn-xs, .btn-sm { text-decoration: none; }
+a.btn:hover, a.btn-xs:hover, a.btn-sm:hover, .btn:hover, .btn-xs:hover, .btn-sm:hover { text-decoration: none; }
+a.btn, a.btn-xs, a.btn-sm { display: inline-block; }
+/* Global full-color variants */
+.btn-primary { border-color:#0d6efd !important; background-color:#0d6efd !important; color:#fff !important; }
+.btn-primary:hover { filter: brightness(0.95); }
+.btn-secondary { border-color:#6c757d !important; background-color:#6c757d !important; color:#fff !important; }
+.btn-secondary:hover { filter: brightness(0.95); }
+.btn-success { border-color:#28a745 !important; background-color:#28a745 !important; color:#fff !important; }
+.btn-success:hover { filter: brightness(0.95); }
+.btn-danger { border-color:#dc3545 !important; background-color:#dc3545 !important; color:#fff !important; }
+.btn-danger:hover { filter: brightness(0.95); }
+.btn-warning { border-color:#fd7e14 !important; background-color:#fd7e14 !important; color:#fff !important; }
+.btn-warning:hover { filter: brightness(0.95); }
+.status { padding:2px 8px; border-radius:999px; font-size:12px; font-weight:700; text-transform:capitalize; display:inline-block; }
+.status.pending { background:#fff3cd; color:#856404; }
+.status.accepted { background:#d4edda; color:#155724; }
+.status.declined { background:#f8d7da; color:#721c24; }
+
+/* Compact variant for admin top bar (mobile screenshot style) */
+.admin-top-bar { padding:8px 18px; padding-top: calc(env(safe-area-inset-top, 0px) + 8px); box-shadow:none !important; border-bottom:1px solid #e2e2e2; position:fixed; top:0; left:0; right:0; z-index:5000; background:#ffffff; border-radius:0 !important; margin:0 !important; width:100%; transform:none !important; }
+.admin-top-bar .hamburger-btn { font-size:20px; padding:4px 6px; margin-right:10px; }
+.admin-top-bar .page-title { font-size:20px; font-weight:700; margin:0; line-height:1.1; }
+.admin-top-bar .logout-btn { padding:6px 14px; font-size:13px; }
+
+/* Shared top bar structural elements (mirroring user dashboard) */
+.top-bar-left { display:flex; align-items:center; gap:14px; }
+.top-bar-logos { display:flex; align-items:center; gap:10px; flex: 0 0 auto; }
+/* Hard cap logo size so they never overflow the header */
+.top-bar-logos img { height:42px; max-height:42px; width:auto; object-fit:contain; flex: 0 0 auto; }
+.admin-top-bar, .top-bar { overflow:hidden; }
+.top-bar-left { min-width: 0; }
+.page-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.top-bar-title-wrap { display:flex; flex-direction:column; line-height:1.2; }
+.admin-top-bar .page-title { font-size:28px; font-weight:700; color:#000; background:none; background-clip:initial; -webkit-background-clip:initial; -webkit-text-fill-color:initial; }
+@media (max-width:480px){ .admin-top-bar .page-title { font-size:22px; } }
+.top-bar-subtitle { color:#666; font-size:14px; margin-top:2px; }
+/* On very small screens, hide logos to give space to the title */
+@media (max-width: 520px){
+	.top-bar-logos { display:none; }
+}
+
+/* Optional helper classes to adjust gradient without editing CSS */
+.sidebar.angle-90 { --sidebar-gradient-angle: 90deg; }
+.sidebar.angle-135 { --sidebar-gradient-angle: 135deg; }
+.sidebar.angle-180 { --sidebar-gradient-angle: 180deg; }
+
+/* Brand palettes (examples) */
+.sidebar.brand-rose { --sidebar-gradient-start:#ffe6f0; --sidebar-gradient-mid:#ffd3e4; --sidebar-gradient-end:#ff9ec5; }
+.sidebar.brand-ocean { --sidebar-gradient-start:#e0f2fe; --sidebar-gradient-mid:#bae6fd; --sidebar-gradient-end:#7dd3fc; }
+.sidebar.brand-lavender { --sidebar-gradient-start:#ede9fe; --sidebar-gradient-mid:#ddd6fe; --sidebar-gradient-end:#c4b5fd; }
+/* Darker rose palette for stronger pink look */
+.sidebar.brand-rose-dark { --sidebar-gradient-start:#ffd3e4; --sidebar-gradient-mid:#ff9fc5; --sidebar-gradient-end:#ff6fb1; }
+/* Improve contrast for label on vivid pink gradient */
+.sidebar.brand-rose-dark .admin-label { color:#ffffff; }
+
+/* Brand-specific accent override (active bar + focus) */
+.sidebar.brand-rose { --sidebar-accent:#ff69b4; }
+.sidebar.brand-ocean { --sidebar-accent:#0ea5e9; }
+.sidebar.brand-lavender { --sidebar-accent:#8b5cf6; }
+.sidebar.brand-rose-dark { --sidebar-accent:#ff3e98; }
+
+/* ----------------------------------------------
+	 Mobile off-canvas sidebar + overlay behavior
+-----------------------------------------------*/
+@media (max-width: 768px) {
+	/* Sidebar hidden off-canvas by default on mobile */
+	.sidebar { transform: translateX(-100%); box-shadow: 0 0 0 rgba(0,0,0,0); }
+	.sidebar.open { transform: translateX(0); box-shadow: 4px 0 16px rgba(0,0,0,0.15); }
+	/* Main content should not reserve sidebar space on mobile */
+	.main-content { margin-left: 0; }
+}
+
+/* Desktop: offset top-bar to start after the fixed sidebar (280px). 
+   When the layout is expanded (sidebar collapsed), use full width. */
+@media (min-width: 769px) {
+	.admin-top-bar { left: 280px; right: 0; width: auto !important; }
+	.main-content.expanded .admin-top-bar { left: 0; right: 0; width: 100% !important; }
+}
+
+/* Overlay shown when mobile sidebar is open; placed below sticky top bar */
+.sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 3300; display: none; }
+.sidebar-overlay.active { display: block; }
+
+/* ----------------------------------------------
+   Mobile adaptive layout (applies to Admin & User)
+   Improves sidebar, tables, paddings on small screens
+-----------------------------------------------*/
+/* Global responsive table container helper */
+.table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+/* Utility: responsive visibility for cells/columns */
+.hide-sm { display: none !important; }
+@media (min-width: 769px) { .hide-sm { display: revert !important; } }
+.hide-xs { display: none !important; }
+@media (min-width: 481px) { .hide-xs { display: revert !important; } }
+
+/* Utility: wrap top-right actions on small widths */
+.top-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* Ensure images scale inside content */
+.main-content img, .content-box img, .table-container img { max-width: 100%; height: auto; }
+
+@media (max-width: 768px) {
+	/* Sidebar slides in/out (already), ensure ergonomic width */
+	.sidebar { width: 70vw !important; max-width: 300px; }
+	.logo { width: 96px; height: 96px; }
+	.nav-item { padding: 10px 12px; min-height: 44px; }
+	.nav-icon { font-size: 18px; }
+	.nav-text { font-size: 16px; }
+
+	/* Vertical stacked tables on mobile */
+	.data-table, .modern-table, .modal-table, .history-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+	.data-table thead, .modern-table thead, .modal-table thead, .history-table thead { display: none; }
+	.data-table tbody, .modern-table tbody, .modal-table tbody, .history-table tbody { display: block; }
+	.data-table tr, .modern-table tr, .modal-table tr, .history-table tr {
+		display: block;
+		background: #fff;
+		border: 1px solid #f0d3df;
+		border-radius: 12px;
+		box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+		margin: 0 0 10px 0;
+		overflow: hidden;
+	}
+	.data-table td, .modern-table td, .modal-table td, .history-table td {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 10px;
+		padding: 10px 12px;
+		font-size: 13px;
+		border-bottom: 1px solid #f4c6d6;
+	}
+	.data-table tr:last-child td:last-child,
+	.modern-table tr:last-child td:last-child,
+	.modal-table tr:last-child td:last-child,
+	.history-table tr:last-child td:last-child { border-bottom: none; }
+	.data-table td::before, .modern-table td::before, .modal-table td::before, .history-table td::before {
+		content: attr(data-label);
+		min-width: 42%;
+		max-width: 58%;
+		font-weight: 700;
+		color: #6b7280;
+	}
+
+	/* Cards and containers */
+	.chart-card { padding: 14px; }
+	.pink-card { padding: 12px; }
+	.main-content { padding: 16px; }
+	/* Compact title/subtitle sizes to match screenshot */
+	.admin-top-bar .page-title { font-size: 18px !important; }
+	.admin-top-bar .top-bar-subtitle { font-size: 11.5px; line-height: 1.15; }
+	.admin-top-bar .logout-btn { padding:6px 12px !important; font-size:12px !important; border-radius:8px; }
+}
+/* Helper: reserve space for fixed top-bar using measured height */
+.main-content.top-bar-space { padding-top: var(--admin-topbar-height, 72px) !important; }
+/* Ensure main content still respects sidebar width; this is already handled by margin-left on .main-content. */
+
+@media (max-width: 480px) {
+	.sidebar { width: 68vw !important; max-width: 280px; }
+	.logo { width: 84px; height: 84px; }
+	.nav-item { padding: 9px 10px; min-height: 44px; }
+	/* Auto-adjust sidebar text/icon sizes on mobile */
+	.sidebar .nav-text { font-size: 15px !important; }
+	.sidebar .nav-icon { font-size: 17px !important; }
+
+	/* Table cells compact */
+	.data-table th, .data-table td,
+	.modern-table th, .modern-table td,
+	.modal-table th, .modal-table td { padding: 8px 6px; font-size: 12.5px; }
+
+	/* Prevent iOS zoom on inputs by ensuring 16px */
+	input, select, textarea { font-size: 16px; }
+
+	/* Larger tap targets */
+	.btn, .logout-btn, .vc-btn { min-height: 44px; }
+	.main-content { padding: 14px; padding-top: calc(14px + 56px + env(safe-area-inset-top, 0px)); }
+	.main-content .admin-top-bar { margin-left: 0; margin-right: 0; width: 100vw; }
+}
+
+/* Extra-small phones (older iPhones, narrow viewports) */
+@media (max-width: 375px) {
+	.sidebar { width: 66vw !important; max-width: 260px; }
+	.sidebar .nav-text { font-size: 14px !important; }
+	.sidebar .nav-icon { font-size: 16px !important; }
+	 /* Keep header flush and fixed consistently at smallest sizes */
+	 .main-content .admin-top-bar { margin-left: 0; margin-right: 0; width: 100vw; transform: none; }
+}
+
+/* --------------------------------------------------
+	 Donation Modals & Tables (extracted from donations.blade.php)
+	 Keeps visual consistency with other admin components.
+	 Scoped class names to avoid collisions (.donation-*)
+-------------------------------------------------- */
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); border:0; }
+.donation-modal { max-width:920px; width:95%; }
+.donation-gradient-header, .gradient-header { background:linear-gradient(135deg,#ff6fb1,#ff408d); color:#fff; border-top-left-radius:inherit; border-top-right-radius:inherit; }
+.donation-gradient-header .modal-title, .gradient-header .modal-title { display:flex; align-items:center; gap:10px; font-weight:700; }
+.modal-header .close-btn { background:rgba(255,255,255,0.2); color:#fff; font-size:20px; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; transition:.2s ease; }
+.modal-header .close-btn:hover { background:rgba(255,255,255,0.35); }
+.donation-table-wrapper, .table-wrapper { overflow-x:auto; max-height:60vh; border:1px solid #f3d9e5; border-radius:12px; background:#fff; }
+.donation-modern-table, .modern-table { width:100%; border-collapse:separate; border-spacing:0; font-size:13px; }
+.donation-modern-table thead th, .modern-table thead th { position:sticky; top:0; background:#ffe5f0; color:#7a1343; font-weight:700; text-align:left; padding:10px 12px; font-size:11px; letter-spacing:.06em; text-transform:uppercase; border-bottom:1px solid #f7c3d8; }
+.donation-modern-table tbody td, .modern-table tbody td { padding:10px 12px; border-bottom:1px solid #f2e5ea; background:#fff; }
+.donation-modern-table tbody tr:nth-child(even) td, .modern-table tbody tr:nth-child(even) td { background:#fff8fb; }
+.donation-modern-table tbody tr:hover td, .modern-table tbody tr:hover td { background:#ffeef6; }
+/* Badges specific to donation tables */
+.donation-badge { padding:4px 8px; border-radius:10px; font-size:11px; font-weight:600; color:#fff; letter-spacing:.5px; display:inline-block; }
+.donation-badge.info { background:linear-gradient(135deg,#38bdf8,#0ea5e9); }
+.donation-badge.success { background:linear-gradient(135deg,#34d399,#059669); }
+.donation-badge.warn { background:linear-gradient(135deg,#fbbf24,#f59e0b); }
+/* Scrollbar aesthetics */
+.donation-table-wrapper::-webkit-scrollbar, .table-wrapper::-webkit-scrollbar { width:10px; height:10px; }
+.donation-table-wrapper::-webkit-scrollbar-track, .table-wrapper::-webkit-scrollbar-track { background:#f9f1f5; border-radius:10px; }
+.donation-table-wrapper::-webkit-scrollbar-thumb, .table-wrapper::-webkit-scrollbar-thumb { background:#f5a1c7; border-radius:10px; }
+.donation-table-wrapper::-webkit-scrollbar-thumb:hover, .table-wrapper::-webkit-scrollbar-thumb:hover { background:#ff69b4; }
+@media (max-width:640px){
+	.donation-modern-table thead th, .donation-modern-table tbody td,
+	.modern-table thead th, .modern-table tbody td { padding:8px 10px; }
+}
+
+/* Backward compatibility: legacy badge class names used in Blade markup */
+.badge { padding:4px 8px; border-radius:10px; font-size:11px; font-weight:600; color:#fff; letter-spacing:.5px; display:inline-block; }
+.badge-info { background:linear-gradient(135deg,#38bdf8,#0ea5e9); }
+.badge-success { background:linear-gradient(135deg,#34d399,#059669); }
+.badge-warn { background:linear-gradient(135deg,#fbbf24,#f59e0b); }
+
+/* --------------------------------------------------
+	Generic Modal Shell (shared across admin)
+	Keeps simple base so specialized components (e.g. donation modals) can layer on.
+-------------------------------------------------- */
+.modal { display:none; position:fixed; inset:0; z-index:11000; width:100%; height:100%; background:rgba(0,0,0,.5); justify-content:center; align-items:center; padding:20px; }
+.modal-content { background:#fff; border-radius:12px; width:90%; max-width:1000px; max-height:80vh; display:flex; flex-direction:column; box-shadow:0 10px 25px rgba(0,0,0,.25); }
+.modal-header { padding:18px 26px; display:flex; justify-content:space-between; align-items:center; border-radius:12px 12px 0 0; }
+.modal-title { font-size:20px; font-weight:700; margin:0; }
+.modal-body { padding:24px 26px; overflow:auto; }
+.modal-footer { padding:16px 22px; border-top:1px solid #eee; text-align:right; }
+.close-btn { background:none; border:none; cursor:pointer; font-size:26px; line-height:1; }
+
+/* Fallback table style for legacy modal tables (will not target modern-table) */
+.modal-table { width:100%; border-collapse:collapse; margin-top:12px; }
+.modal-table:not(.modern-table) th,
+.modal-table:not(.modern-table) td { padding:12px; text-align:left; border-bottom:1px solid #eee; }
+.modal-table:not(.modern-table) th { background:#f8f9fa; font-weight:700; }
+
+/* --------------------------------------------------
+	KPI Cards (Dashboard counters)
+	Usage:
+	  <div class="kpi-card kpi-donation"> ... <span class="kpi-icon"><i class="fas fa-..."></i></span></div>
+-------------------------------------------------- */
+.kpi-grid { display:grid; gap:12px; grid-template-columns: repeat(auto-fill, minmax(240px, 280px)); justify-content: start; align-items: stretch; }
+.kpi-card { background:#fff; border:1px solid #e9ecef; border-radius:14px; padding:18px 18px; display:flex; align-items:flex-start; justify-content:space-between; transition: box-shadow .2s ease, transform .1s ease; color:#111827; min-height:96px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+.kpi-card:hover { box-shadow: 0 8px 22px rgba(0,0,0,0.08); transform: translateY(-2px); }
+.kpi-card .kpi-title { font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:#f0f9ff; font-weight:800; opacity:.95; }
+.kpi-card .kpi-value { font-size:28px; font-weight:800; color:#ffffff; font-variant-numeric: tabular-nums; line-height:1.1; margin-top:2px; }
+.kpi-card .kpi-meta { font-size:12px; color: rgba(255,255,255,0.9); margin-top:6px; font-weight:600; }
+.kpi-card .kpi-icon { width:44px; height:44px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; color:#fff; box-shadow: 0 6px 14px rgba(0,0,0,0.12); }
+
+/* Blue for Donations (solid) */
+.kpi-donation { background:#2563eb; border-color:#2563eb; color:#fff; }
+.kpi-donation .kpi-title { color: rgba(255,255,255,0.95); }
+.kpi-donation .kpi-value { color:#fff; }
+.kpi-donation .kpi-icon { background: rgba(255,255,255,0.2); color:#fff; }
+
+/* Red for Requests (solid) */
+.kpi-request { background:#dc2626; border-color:#dc2626; color:#fff; }
+.kpi-request .kpi-title { color: rgba(255,255,255,0.95); }
+.kpi-request .kpi-value { color:#fff; }
+.kpi-request .kpi-icon { background: rgba(255,255,255,0.2); color:#fff; }
+
+/* Green for Health Screening (solid) */
+.kpi-screening { background:#059669; border-color:#059669; color:#fff; }
+.kpi-screening .kpi-title { color: rgba(255,255,255,0.95); }
+.kpi-screening .kpi-value { color:#fff; }
+.kpi-screening .kpi-icon { background: rgba(255,255,255,0.2); color:#fff; }
+
+@media (max-width:640px){
+	.kpi-card { padding:12px 14px; }
+	.kpi-card .kpi-value { font-size:22px; }
+	.kpi-card .kpi-icon { width:36px; height:36px; }
+}
+
+/* Simple card shell for charts/blocks */
+.chart-card { background:#fff; border:1px solid #e9ecef; border-radius:14px; padding:20px; box-shadow:0 2px 4px rgba(0,0,0,0.04); }
+/* Ensure charts scale within their cards to avoid overlap */
+.chart-card canvas { display:block; width:100% !important; height:auto; max-width:100%; }
+/* Sensible default heights per chart type */
+#donationsRequestsLineChart { height:320px !important; }
+#breastmilkTotalsChart, #hsStatusPieChart { height:260px !important; }
+
+/* ----------------------------------------------
+	Pagination tweaks: hide large SVG chevrons
+	(Laravel's Tailwind pagination includes inline SVGs)
+----------------------------------------------- */
+.pagination svg { display:none !important; width:0 !important; height:0 !important; }
+/* Hide Previous/Next containers entirely to avoid empty rounded boxes */
+.pagination [rel="prev"],
+.pagination [rel="next"],
+.pagination [aria-label*="Previous"],
+.pagination [aria-label*="Next"] { display:none !important; }
+
+/* Ensure SweetAlert overlays cover sticky top bar and other UI */
+.swal2-container { z-index: 100000 !important; }
+.swal2-container.swal2-backdrop-show { background-color: rgba(0,0,0,0.5) !important; }
+
+/* -----------------------------
+	Vanilla Admin Calendar Styles
+------------------------------*/
+.vc { background:#fff; border:1px solid #e9ecef; border-radius:14px; padding:12px; box-shadow:0 2px 4px rgba(0,0,0,0.04); position:relative; z-index: 900; }
+.vc-header { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:10px; }
+.vc-title { font-weight:700; color:#374151; }
+.vc-nav { display:flex; gap:6px; }
+.vc-btn { border:1px solid #e5e7eb; background:#fff; color:#374151; padding:6px 10px; border-radius:6px; cursor:pointer; }
+.vc-btn:hover { background:#f9fafb; }
+.vc-grid { display:grid; grid-template-columns: repeat(7, 1fr); gap:6px; }
+.vc-weekday { font-size:12px; color:#6b7280; text-align:center; padding:4px 0; }
+.vc-day { background:#fff; border:1px solid #f1f5f9; border-radius:10px; min-height:58px; padding:6px; position:relative; cursor:pointer; transition:box-shadow .15s ease, transform .15s ease; }
+.vc-day:hover { box-shadow:0 4px 10px rgba(0,0,0,0.06); transform: translateY(-1px); }
+.vc-day .vc-date { font-size:12px; color:#374151; font-weight:700; }
+.vc-day.today { border-color:#60a5fa; box-shadow: inset 0 0 0 1px #60a5fa; }
+.vc-day.out { background:#fafafa; color:#9ca3af; }
+.vc-day.available { background:#ffe6f0; border-color:#ffb6ce; }
+.vc-day.available::after { content:""; position:absolute; right:8px; bottom:6px; width:8px; height:8px; background:#ff69b4; border-radius:999px; }
+@media (max-width:640px){ .vc-day { min-height:46px; padding:6px; } }
+
+/* KPI row across the top of dashboard */
+.kpi-row { display:grid; grid-template-columns: repeat(3, minmax(220px, 1fr)); gap:12px; margin-bottom:18px; align-items:stretch; }
+@media (max-width: 980px){ .kpi-row { grid-template-columns: repeat(2, minmax(200px, 1fr)); } }
+@media (max-width: 640px){ .kpi-row { grid-template-columns: 1fr; } }
+
+/* ----------------------------------------------
+	Sidebar font size enforcement (original sizes)
+	Ensures any page-specific overrides don't enlarge
+	the sidebar text or icons inadvertently.
+-----------------------------------------------*/
+.sidebar .nav-text { font-size: 16px !important; }
+.sidebar .nav-icon { font-size: 18px !important; }
