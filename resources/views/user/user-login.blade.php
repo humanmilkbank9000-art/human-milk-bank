@@ -59,7 +59,7 @@
       <div class="welcome-eyebrow">Welcome to</div>
       <div class="welcome-name">Cagayan de Oro City - Human Milk Bank &amp; Lactation Support Center</div>
       <div class="welcome-note">Log in to access the dashboard.</div>
-      <div class="welcome-note"  style="color: red;"><h3>TEST SERVER.</h3></div>
+      <div class="welcome-note"  style="color: red;"><h3>Version 1.1</h3></div>
     </div>
 
     <div class="auth-right">
