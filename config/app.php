@@ -66,7 +66,7 @@ return [
     */
 
     // Set default timezone; allow override via APP_TIMEZONE
-    'timezone' => env('APP_TIMEZONE', 'Asia/Manila'),
+    'timezone' => env('APP_TIMEZONE', 'Asia/Singapore'),
 
     /*
     |--------------------------------------------------------------------------
