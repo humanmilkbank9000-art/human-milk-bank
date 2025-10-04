@@ -519,7 +519,23 @@
         }
 
         function formatDateStr(s) { try { return s ? new Date(s).toLocaleDateString() : 'N/A'; } catch (e) { return s || 'N/A'; } }
-        function formatTimeStr(t) { if (!t) return 'TBD'; try { const s = t.length === 5 ? t + ':00' : t; const d = new Date('2000-01-01T' + s); if (!isNaN(d.getTime())) { return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }); } } catch (e) { } return t; }
+        function formatTimeStr(t) { 
+            if (!t) return 'TBD'; 
+            try { 
+                const s = t.length === 5 ? t + ':00' : t; 
+                // Create date with Singapore timezone (UTC+8)
+                const d = new Date('2000-01-01T' + s + '+08:00'); 
+                if (!isNaN(d.getTime())) { 
+                    return d.toLocaleTimeString('en-US', { 
+                        hour: 'numeric', 
+                        minute: '2-digit', 
+                        hour12: true,
+                        timeZone: 'Asia/Singapore' 
+                    }); 
+                } 
+            } catch (e) { } 
+            return t; 
+        }
 
         function setBadge(id, value) { const el = document.getElementById(id); if (el) el.textContent = String(value); }
 

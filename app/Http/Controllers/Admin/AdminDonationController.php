@@ -173,8 +173,8 @@ class AdminDonationController extends Controller
                         'User_ID'       => $completed->User_ID,
                         'number_of_bags'=> $completed->number_of_bags,
                         'total_volume'  => $completed->total_volume,
-                        'date_received' => $completed->donation_date ?? $completed->scheduled_date,
-                        'time_received' => $completed->donation_time ?? $completed->scheduled_time,
+                        'date_received' => now()->toDateString(),
+                        'time_received' => now()->format('H:i:s'),
                         'created_at'    => now(),
                         'updated_at'    => now(),
                     ]);
@@ -450,14 +450,14 @@ class AdminDonationController extends Controller
                     'updated_at' => now(),
                 ]);
 
-                // Idempotent insert into unpasteurized inventory
+                // Idempotent insert into unpasteurized inventory (use current time when confirming)
                 DB::table('unpasteurized_inventory')->insertOrIgnore([
                     'donation_id'   => $donationId,
                     'User_ID'       => $walkInRequest->user_id,
                     'number_of_bags'=> $request->number_of_bags,
                     'total_volume'  => $request->total_volume_donated,
-                    'date_received' => $walkInRequest->donation_date,
-                    'time_received' => $walkInRequest->donation_time,
+                    'date_received' => now()->toDateString(),
+                    'time_received' => now()->format('H:i:s'),
                     'created_at'    => now(),
                     'updated_at'    => now(),
                 ]);
@@ -675,8 +675,8 @@ class AdminDonationController extends Controller
                     'User_ID'       => $walkInRequest->user_id,
                     'number_of_bags'=> $request->number_of_bags,
                     'total_volume'  => $request->total_volume_donated,
-                    'date_received' => $walkInRequest->donation_date,
-                    'time_received' => $walkInRequest->donation_time,
+                    'date_received' => now()->toDateString(),
+                    'time_received' => now()->format('H:i:s'),
                     'created_at'    => now(),
                     'updated_at'    => now(),
                 ]);
@@ -809,7 +809,7 @@ class AdminDonationController extends Controller
                     'updated_at' => now()
                 ]);
 
-            // Insert into unpasteurized inventory (use scheduled date/time as donation date/time)
+            // Insert into unpasteurized inventory (use current time when admin confirms)
             $completed = DB::table('donation_history')->where('id', $id)->first();
             if ($completed) {
                 DB::table('unpasteurized_inventory')->insertOrIgnore([
@@ -817,8 +817,8 @@ class AdminDonationController extends Controller
                     'User_ID'       => $completed->User_ID,
                     'number_of_bags'=> $completed->number_of_bags,
                     'total_volume'  => $completed->total_volume,
-                    'date_received' => $completed->donation_date ?? $completed->scheduled_date,
-                    'time_received' => $completed->donation_time ?? $completed->scheduled_time,
+                    'date_received' => now()->toDateString(),
+                    'time_received' => now()->format('H:i:s'),
                     'created_at'    => now(),
                     'updated_at'    => now(),
                 ]);

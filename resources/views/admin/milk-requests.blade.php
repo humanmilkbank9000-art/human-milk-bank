@@ -126,7 +126,7 @@
                                         <td>
                                             {{ $row->scheduled_date ? \Carbon\Carbon::parse($row->scheduled_date)->format('M d, Y') : '—' }}
                                             @if($row->scheduled_time)
-                                                • {{ \Carbon\Carbon::parse('2000-01-01 '.$row->scheduled_time)->format('g:i A') }}
+                                                • {{ \Carbon\Carbon::createFromFormat('H:i:s', $row->scheduled_time, config('app.timezone'))->format('g:i A') }}
                                             @endif
                                         </td>
                                         @if(($view ?? 'pending') !== 'pending')
@@ -235,7 +235,7 @@
                                     <div style="font-weight:600;">
                                         {{ $requestRow->scheduled_date ? \Carbon\Carbon::parse($requestRow->scheduled_date)->format('M d, Y') : '—' }}
                                         @if($requestRow->scheduled_time)
-                                            • {{ \Carbon\Carbon::parse('2000-01-01 '.$requestRow->scheduled_time)->format('g:i A') }}
+                                            • {{ \Carbon\Carbon::createFromFormat('H:i:s', $requestRow->scheduled_time, config('app.timezone'))->format('g:i A') }}
                                         @endif
                                     </div>
                                 </div>

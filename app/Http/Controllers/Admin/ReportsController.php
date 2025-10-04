@@ -794,7 +794,7 @@ class ReportsController extends Controller
         $items = [];
         foreach ($rows as $i => $r) {
             $date = $r->ddate ? Carbon::parse($r->ddate)->format('M d, Y') : '';
-            $time = $r->dtime ? Carbon::parse('1970-01-01 '.$r->dtime)->format('h:i A') : '';
+            $time = $r->dtime ? Carbon::createFromFormat('H:i:s', $r->dtime, config('app.timezone'))->format('h:i A') : '';
             $items[] = [
                 'no' => $i+1,
                 'donor' => $r->donor,
@@ -873,7 +873,7 @@ class ReportsController extends Controller
         $items = [];
         foreach ($rows as $i => $r) {
             $date = $r->ddate ? Carbon::parse($r->ddate)->format('M d, Y') : '';
-            $time = $r->dtime ? Carbon::parse('1970-01-01 '.$r->dtime)->format('h:i A') : '';
+            $time = $r->dtime ? Carbon::createFromFormat('H:i:s', $r->dtime, config('app.timezone'))->format('h:i A') : '';
             $items[] = [
                 'no' => $i+1,
                 'donor' => $r->donor,
@@ -919,7 +919,7 @@ class ReportsController extends Controller
                 'bags'=>(int)($r->number_of_bags ?? 0),
                 'volume'=>(float)($r->total_volume ?? 0),
                 'date'=>$r->date_received ? Carbon::parse($r->date_received)->format('M d, Y') : '',
-                'time'=>$r->time_received ? Carbon::parse('1970-01-01 '.$r->time_received)->format('h:i A') : '',
+                'time'=>$r->time_received ? Carbon::createFromFormat('H:i:s', $r->time_received, config('app.timezone'))->format('h:i A') : '',
             ];
         }
 
@@ -937,7 +937,7 @@ class ReportsController extends Controller
                 'bags'=>(int)($r->number_of_bags ?? 0),
                 'volume'=>(float)($r->total_volume ?? 0),
                 'date'=>$r->date_pasteurized ? Carbon::parse($r->date_pasteurized)->format('M d, Y') : '',
-                'time'=>$r->time_pasteurized ? Carbon::parse('1970-01-01 '.$r->time_pasteurized)->format('h:i A') : '',
+                'time'=>$r->time_pasteurized ? Carbon::createFromFormat('H:i:s', $r->time_pasteurized, config('app.timezone'))->format('h:i A') : '',
             ];
         }
 
@@ -956,7 +956,7 @@ class ReportsController extends Controller
                 'batch'=>$r->batch_number,
                 'volume'=>(float)($r->volume ?? 0),
                 'date'=>$r->date_dispensed ? Carbon::parse($r->date_dispensed)->format('M d, Y') : '',
-                'time'=>$r->time_dispensed ? Carbon::parse('1970-01-01 '.$r->time_dispensed)->format('h:i A') : '',
+                'time'=>$r->time_dispensed ? Carbon::createFromFormat('H:i:s', $r->time_dispensed, config('app.timezone'))->format('h:i A') : '',
             ];
         }
 
@@ -1030,7 +1030,7 @@ class ReportsController extends Controller
                 'bags'=>(int)($r->number_of_bags ?? 0),
                 'volume'=>(float)($r->total_volume ?? 0),
                 'date'=>$r->date_received ? Carbon::parse($r->date_received)->format('M d, Y') : '',
-                'time'=>$r->time_received ? Carbon::parse('1970-01-01 '.$r->time_received)->format('h:i A') : '',
+                'time'=>$r->time_received ? Carbon::createFromFormat('H:i:s', $r->time_received, config('app.timezone'))->format('h:i A') : '',
             ];
         }
         $pasRows = DB::table('pasteurized_inventory as pi')
@@ -1046,7 +1046,7 @@ class ReportsController extends Controller
                 'bags'=>(int)($r->number_of_bags ?? 0),
                 'volume'=>(float)($r->total_volume ?? 0),
                 'date'=>$r->date_pasteurized ? Carbon::parse($r->date_pasteurized)->format('M d, Y') : '',
-                'time'=>$r->time_pasteurized ? Carbon::parse('1970-01-01 '.$r->time_pasteurized)->format('h:i A') : '',
+                'time'=>$r->time_pasteurized ? Carbon::createFromFormat('H:i:s', $r->time_pasteurized, config('app.timezone'))->format('h:i A') : '',
             ];
         }
         $disRows = DB::table('dispensed_records as dr')
@@ -1063,7 +1063,7 @@ class ReportsController extends Controller
                 'batch'=>$r->batch_number,
                 'volume'=>(float)($r->volume ?? 0),
                 'date'=>$r->date_dispensed ? Carbon::parse($r->date_dispensed)->format('M d, Y') : '',
-                'time'=>$r->time_dispensed ? Carbon::parse('1970-01-01 '.$r->time_dispensed)->format('h:i A') : '',
+                'time'=>$r->time_dispensed ? Carbon::createFromFormat('H:i:s', $r->time_dispensed, config('app.timezone'))->format('h:i A') : '',
             ];
         }
         return view('admin.reports.monthly-inventory-print', [
